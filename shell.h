@@ -1,3 +1,14 @@
+/**
+ * ------------------MyShell-----------------------
+ * Main Function of the shell	
+ * Simulate the implementation of shell
+ *
+ *	Author: xiabee
+ *	Date  : 2020.1.18
+ *  Compiling environment:	gcc version 10.2.1 20201207 (Debian 10.2.1-1)
+ * ---------------------------------------------
+ */
+
 #ifndef _SHELL_H
 #define _SHELL_H
 
