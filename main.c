@@ -1,3 +1,12 @@
+/**
+ * ------------------MyShell-----------------------
+ *	Simulate the implementation of shell
+ *
+ *	Author: xiabee
+ *	Date  : 2020.1.18
+ *  Compiling environment:	gcc version 10.2.1 20201207 (Debian 10.2.1-1)
+ * ---------------------------------------------
+ */
 #include "shell.h"
 
 int find(char *str, char *ch) // 查询字符第一次出现的位置
@@ -27,7 +36,7 @@ int find(char *str, char *ch) // 查询字符第一次出现的位置
 
 void Init() // shell初始化
 {
-    cnt = 0;
+    num = 0;
     memset(arglist, 0x00, sizeof(arglist));
     // 初始化命令列表
 
@@ -94,7 +103,7 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
     char *save = NULL;
     // strtok_r 原型函数的保存指针
 
-    int num = 0;
+    num = 0;
     // 参数计数器
 
     char chBuffer[MAXN];
@@ -109,7 +118,6 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
     char *operator[] = {">>", "<<", ">", "<", "|"};
     int opline = sizeof(operator) / sizeof(operator[0]);
     // 记录操作符与操作符个数, 使用 opline 增强可移植性
-
 
     strncpy(chBuffer, str, sizeof(chBuffer) - 1);
     token = chBuffer;
@@ -185,6 +193,24 @@ int inner(char *arglist[]) //执行内置指令
             return 0;
         }
         printf("\n");
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "mycp\0") == 0)
+    {
+
+        struct stat statbuf;   //stat结构
+        struct utimbuf timeby; //文件时间结构
+        if (Check(num, arglist, statbuf))
+            return -1;
+
+        Mycp(arglist[1], arglist[2]); //开始复制
+
+        stat(arglist[1], &statbuf);
+        timeby.actime = statbuf.st_atime;  //修改时间属性，存取时间
+        timeby.modtime = statbuf.st_mtime; //修改时间
+        utime(arglist[2], &timeby);
+        printf("Copy Finished!\n");
         return 1;
     }
 
@@ -409,7 +435,6 @@ int main()
     // 用于记录缓冲区字符和字符个数
 
     int pid;
-    int num;
     int result;
 
     while (1)
@@ -426,6 +451,8 @@ int main()
             continue;
         }
         // 仅读到回车
+
+        memset(arglist,0x00, sizeof(arglist));
 
         num = mystrtok(buf, " \b\r\n\t");
         // 处理命令，分割为多个参数

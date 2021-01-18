@@ -16,6 +16,8 @@
 #include <sys/time.h>
 #include <utime.h>
 
+#include "mycp.c"
+
 #define MAXN 1024
 #define BUFFSIZE 1024
 #define LEN 128
@@ -35,7 +37,7 @@ const char *COMMAND_PIPE = "|";
 char *arglist[MAXN];
 // shell 指令的参数表
 
-int cnt;
+int num;
 // shell指令的参数个数
 
 enum
