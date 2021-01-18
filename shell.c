@@ -106,24 +106,20 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
     char *save1 = NULL;
     // 用于切分重定向符号和管道符号
 
-    char *operator[] = {">", "<", "|"};
+    char *operator[] = {">>", "<<", ">", "<", "|"};
     int opline = sizeof(operator) / sizeof(operator[0]);
     // 记录操作符与操作符个数, 使用 opline 增强可移植性
 
-    int flag_op = 0;
-    // 标记是否存在符号与参数相连
 
     strncpy(chBuffer, str, sizeof(chBuffer) - 1);
     token = chBuffer;
 
-    tmp = make(token);
     while (NULL != (token = strtok_r(token, delim, &save)))
     {
         for (int i = 0; i < opline; i++)
         {
             if (strlen(token) > 1 && find(token, operator[i]) != -1)
             {
-                flag_op = 1;
                 if (find(token, operator[i]) == 0) // 首位出现, 例如 ls >a.txt
                 {
                     arglist[num++] = make(operator[i]);
@@ -157,9 +153,7 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
         }
 
         arglist[num++] = make(token);
-
         token = NULL;
-        // strtok_r 第一个形参需设置为NULL
     }
 
     return num;
