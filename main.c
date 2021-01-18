@@ -1,15 +1,17 @@
 /**
  * ------------------MyShell-----------------------
- *	Simulate the implementation of shell
+ * Main Function of the shell	
+ * Simulate the implementation of shell
  *
  *	Author: xiabee
  *	Date  : 2020.1.18
  *  Compiling environment:	gcc version 10.2.1 20201207 (Debian 10.2.1-1)
  * ---------------------------------------------
  */
+
 #include "shell.h"
 
-int find(char *str, char *ch) // 查询字符第一次出现的位置
+int find(char *str, char *ch) // query the position where the character first appears
 {
     int len1 = strlen(str);
     int len2 = strlen(ch);
@@ -34,11 +36,11 @@ int find(char *str, char *ch) // 查询字符第一次出现的位置
     return -1;
 }
 
-void Init() // shell初始化
+void Init() // shell initialization
 {
     num = 0;
     memset(arglist, 0x00, sizeof(arglist));
-    // 初始化命令列表
+    // command list initialization
 
     char pwd[LEN];
     char name[LEN];
@@ -55,11 +57,12 @@ void Init() // shell初始化
     ph++;
 
     printf("\e[32;1m[%s @ %s %s]\n\e[0m\e[31;1m$ \e[0m", pass->pw_name, name, ph);
-    // 输出用户名、主机名、目录名
+    //Output user name, host name and directory name
+
     return;
 }
 
-int execute(char *arglist[]) // 执行外部指令
+int execute(char *arglist[]) // execute external instructions
 {
     int err;
     err = execvp(arglist[0], arglist);
@@ -71,11 +74,11 @@ int execute(char *arglist[]) // 执行外部指令
     return err;
 }
 
-char *make(char *buf) // 将字符传入参数表内,并分配空间
+char *make(char *buf) //pass characters into parameter table and allocate space
 {
     char *arc;
     arc = malloc(strlen(buf) + 1);
-    // 分配堆内存
+    //Allocate heap memory
 
     if (arc == NULL)
     {
@@ -87,37 +90,38 @@ char *make(char *buf) // 将字符传入参数表内,并分配空间
     return arc;
 }
 
-int mystrtok(char *str, char *delim) // 对传入参数进行分割
+int mystrtok(char *str, char *delim) // split the incoming parameters
 {
     /*
-    * 这里使用 strtok_r 函数，线程安全
-    * 若直接使用 strtok 函数，多线程时会导致异常
-    * 
-    * str: 传入字符串
-    * delim: 分割符
+    * strtok_r() function, thread safety
+    * If you use the strtok() function directly, it will cause an exception in multithreading
+    *
+    * str: incoming string
+    * delim: separator
     */
 
     char *token = NULL;
-    // strtok_r 原型函数的token指针
+    // Token pointer of prototype function strtok_r()
 
     char *save = NULL;
-    // strtok_r 原型函数的保存指针
+    // Save pointer of prototype function strtok_r()
 
     num = 0;
-    // 参数计数器
+    //Parameter counter
 
     char chBuffer[MAXN];
 
     char *token1 = NULL;
     char *tmp = NULL;
-    // 用于记录切分前的token
+    // Used to record the token before segmentation
 
     char *save1 = NULL;
-    // 用于切分重定向符号和管道符号
+    //Used to segment redirection symbols and pipeline symbols
 
     char *operator[] = {">>", "<<", ">", "<", "|"};
     int opline = sizeof(operator) / sizeof(operator[0]);
-    // 记录操作符与操作符个数, 使用 opline 增强可移植性
+    // Record operators and the number of operators, and use opline to enhance portability
+    // ">>" and "<<" not yet realized
 
     strncpy(chBuffer, str, sizeof(chBuffer) - 1);
     token = chBuffer;
@@ -128,14 +132,14 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
         {
             if (strlen(token) > 1 && find(token, operator[i]) != -1)
             {
-                if (find(token, operator[i]) == 0) // 首位出现, 例如 ls >a.txt
+                if (find(token, operator[i]) == 0) // For example, ls >a.txt
                 {
                     arglist[num++] = make(operator[i]);
                     token1 = strtok_r(token, operator[i], &save1);
                     arglist[num++] = make(token1);
                 }
 
-                else if (find(token, operator[i]) == strlen(token) - 1) // 末位出现, 例如 ls> a.txt
+                else if (find(token, operator[i]) == strlen(token) - 1) // For example, ls> a.txt
                 {
                     token1 = strtok_r(token, operator[i], &save1);
                     arglist[num++] = make(token1);
@@ -155,9 +159,9 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
                 save1 = NULL;
 
                 strcmp(token, tmp);
-                // 还原token
+                // restore token
             }
-            // 字符内出现操作符
+            //An operator appears within a character
         }
 
         arglist[num++] = make(token);
@@ -167,18 +171,38 @@ int mystrtok(char *str, char *delim) // 对传入参数进行分割
     return num;
 }
 
-int inner(char *arglist[]) //执行内置指令
+int inner(char *arglist[]) // execute built-in instructions
 {
     if (strcmp(arglist[0], "exit\0") == 0) //exit
     {
+        printf("Bye~\n");
         exit(0);
+        return 1;
+    }
+
+    if (strcmp(arglist[0], "help\0") == 0) // help
+    {
+        printf("XSLF bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)\n");
+        // XSLF is the short names of the four authors: XYJ, SXC, LJH, FKT
+
+        printf("These shell commands are defined internally.  Type 'help' to see this list.\n\n");
+        printf("pwd\t\t: Show the current working directory\n");
+        printf("cd\t\t: Change working directory.\n");
+        printf("mycp\t\t: Copy entire directory.\n");
+        printf("myps\t\t: Display process information\n");
+        printf("exit\t\t: Exit the shell.\n");
+
+        printf("\n");
+
         return 1;
     }
 
     else if (strcmp(arglist[0], "pwd\0") == 0) //pwd
     {
         char buf[LEN];
-        getcwd(buf, sizeof(buf)); //获得当前目录
+        getcwd(buf, sizeof(buf));
+        // get current directory
+
         printf("%s\n\n", buf);
         return 1;
     }
@@ -187,10 +211,10 @@ int inner(char *arglist[]) //执行内置指令
     {
         char buf[LEN];
         int sta = chdir(arglist[1]);
-        if (sta < 0) // 找不到文件夹时
+        if (sta < 0) // cannot find the file
         {
             printf("\e[31;1mcd: No such file or directory: %s\n\n\e[0m", arglist[1]);
-            return 0;
+            return 1;
         }
         printf("\n");
         return 1;
@@ -199,18 +223,34 @@ int inner(char *arglist[]) //执行内置指令
     else if (strcmp(arglist[0], "mycp\0") == 0)
     {
 
-        struct stat statbuf;   //stat结构
-        struct utimbuf timeby; //文件时间结构
+        struct stat statbuf;
+        //stat structure
+
+        struct utimbuf timeby;
+        // time file structure
+
         if (Check(num, arglist, statbuf))
             return -1;
 
-        Mycp(arglist[1], arglist[2]); //开始复制
+        Mycp(arglist[1], arglist[2]);
+        // starting copying
 
         stat(arglist[1], &statbuf);
-        timeby.actime = statbuf.st_atime;  //修改时间属性，存取时间
-        timeby.modtime = statbuf.st_mtime; //修改时间
+        timeby.actime = statbuf.st_atime;
+        // modify the time attribute to access the time
+
+        timeby.modtime = statbuf.st_mtime;
+        // mofify time
+
         utime(arglist[2], &timeby);
         printf("Copy Finished!\n");
+        printf("\n");
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "myps\0") == 0)
+    {
+        myps();
         return 1;
     }
 
@@ -218,50 +258,55 @@ int inner(char *arglist[]) //执行内置指令
         return 0;
 }
 
-int callCommandWithRedi(int left, int right) // 所要执行的指令区间[left, right)，不含管道，可能含有重定向
+int callCommandWithRedi(int left, int right) // the instruction interval [left, right) to be executed does not contain pipeline and may contain redirection
 {
-    /* 判断是否有重定向 */
+
     int inNum = 0, outNum = 0;
     char *inFile = NULL, *outFile = NULL;
+    // determine whether there is a redirection
+
     int endIdx = right;
-    // 指令在重定向前的终止下标
+    // the ending subscript of an instruction before resetting
 
     for (int i = left; i < right; ++i)
     {
         if (strcmp(arglist[i], COMMAND_IN) == 0 && strcmp(arglist[i], COMMAND_IN2) != 0)
         {
-            // 输入重定向
+
             inNum++;
+            // input redirection
+
             if (i + 1 < right)
                 inFile = arglist[i + 1];
+
             else
                 return ERROR_MISS_PARAMETER;
-            // 重定向符号后缺少文件名
+            // missing file name after redirection symbol
 
             if (endIdx == right)
                 endIdx = i;
         }
         else if (strcmp(arglist[i], COMMAND_OUT) == 0 && strcmp(arglist[i], COMMAND_OUT2) != 0)
         {
-            // 输出重定向
+            // output redirection
             outNum++;
             if (i + 1 < right)
                 outFile = arglist[i + 1];
             else
                 return ERROR_MISS_PARAMETER;
-            // 重定向符号后缺少文件名
+            // missing file name after redirection symbol
 
             if (endIdx == right)
                 endIdx = i;
         }
     }
-    /* 处理重定向 */
-    if (inNum == 1)
+
+    if (inNum == 1) // processing redirection
     {
         FILE *fp = fopen(inFile, "r");
         if (fp == NULL)
             return ERROR_FILE_NOT_EXIST;
-        // 输入重定向文件不存在
+        // The input redirection file does not exist
 
         fclose(fp);
     }
@@ -280,41 +325,51 @@ int callCommandWithRedi(int left, int right) // 所要执行的指令区间[left
     }
     else if (pid == 0)
     {
-        /* 输入输出重定向 */
+
         if (inNum == 1)
             freopen(inFile, "r", stdin);
         if (outNum == 1)
             freopen(outFile, "w", stdout);
+        // I/O redirection
 
-        /* 执行命令 */
         char *comm[MAXN];
         for (int i = left; i < endIdx; ++i)
             comm[i] = arglist[i];
         comm[endIdx] = NULL;
         execvp(comm[left], comm + left);
-        exit(errno); // 执行出错，返回errno
+        // execute the order
+
+        exit(errno);
+        // error in execution, return errno
     }
 
     else
     {
         int status;
         waitpid(pid, &status, 0);
-        int err = WEXITSTATUS(status); // 读取子进程的返回码
+        int err = WEXITSTATUS(status);
+        // read the return code of the subprocess
 
         if (err)
-        { // 返回码不为0，意味着子进程执行出错，用红色字体打印出错信息
-            printf("\e[31;1mError: %s\n\e[0m", strerror(err));
+        {
+            printf("\e[31;1mCommand Error: %s\n\e[0m", strerror(err));
+            printf("You may need 'help'\n\n");
         }
+        /* The return code is not 0, 
+         * which means that the subprocess has made an error in execution, 
+         * and the error information is printed in red font
+         */
     }
 
     return result;
 }
 
-int callCommandWithPipe(int left, int right) // 所要执行的指令区间[left, right)，可能含有管道
+int callCommandWithPipe(int left, int right) // The instruction interval [left, right] to be executed may contain a pipeline
 {
     if (left >= right)
         return RESULT_NORMAL;
-    /* 判断是否有管道命令 */
+    // Determine if there is a pipeline command
+
     int pipeIdx = -1;
     for (int i = left; i < right; ++i)
     {
@@ -324,32 +379,39 @@ int callCommandWithPipe(int left, int right) // 所要执行的指令区间[left
             break;
         }
     }
+
     if (pipeIdx == -1)
-    { // 不含有管道命令
+    {
         return callCommandWithRedi(left, right);
     }
+    // Does not contain pipeline command
+
     else if (pipeIdx + 1 == right)
-    { // 管道命令'|'后续没有指令，参数缺失
+    {
         return ERROR_PIPE_MISS_PARAMETER;
     }
+    // The pipeline command '|' has no subsequent command, and the parameter is missing
 
-    /* 执行命令 */
     int fds[2];
     if (pipe(fds) == -1)
     {
         return ERROR_PIPE;
     }
+
+    /* Execute the order */
     int result = RESULT_NORMAL;
     pid_t pid = vfork();
+
     if (pid == -1)
     {
         result = ERROR_FORK;
     }
     else if (pid == 0)
-    { // 子进程执行单个命令
+    {
+        //The subprocess executes a single command
         close(fds[0]);
         dup2(fds[1], STDOUT_FILENO);
-        // 将标准输出重定向到fds[1]
+        //Redirecting standard output to FDS [1]
 
         close(fds[1]);
 
@@ -358,42 +420,43 @@ int callCommandWithPipe(int left, int right) // 所要执行的指令区间[left
     }
     else
     {
-        // 父进程递归执行后续命令
+        // The parent process recursively executes subsequent commands
         int status;
         waitpid(pid, &status, 0);
         int exitCode = WEXITSTATUS(status);
 
         if (exitCode != RESULT_NORMAL)
         {
-            // 子进程的指令没有正常退出，打印错误信息
+            // The instruction of the subprocess does not exit normally, and the error message is printed
 
             char info[4096] = {0};
             char line[MAXN];
             close(fds[1]);
             dup2(fds[0], STDIN_FILENO);
-            // 将标准输入重定向到fds[0]
+            // Redirect standard input to fds[0]
 
             close(fds[0]);
             while (fgets(line, MAXN, stdin) != NULL)
             {
-                // 读取子进程的错误信息
+                // Read the error information of the child process
                 strcat(info, line);
             }
 
             printf("%s", info);
-            // 打印错误信息
+            // print errors
 
             result = exitCode;
         }
+
         else if (pipeIdx + 1 < right)
         {
             close(fds[1]);
             dup2(fds[0], STDIN_FILENO);
-            // 将标准输入重定向到fds[0]
+            // Redirect standard input to fds[0]
 
             close(fds[0]);
             result = callCommandWithPipe(pipeIdx + 1, right);
-            // 递归执行后续指令
+            // Execute subsequent instructions recursively
         }
     }
 
@@ -401,7 +464,8 @@ int callCommandWithPipe(int left, int right) // 所要执行的指令区间[left
 }
 
 int callCommand(int commandNum)
-{ // 给用户使用的函数，用以执行用户输入的命令
+{
+    // A function used by a user to execute commands entered by the user
     pid_t pid = fork();
     if (pid == -1)
     {
@@ -409,13 +473,14 @@ int callCommand(int commandNum)
     }
     else if (pid == 0)
     {
-        /* 获取标准输入、输出的文件标识符 */
+
+        /*Get the file identifier of standard input and output*/
         int inFds = dup(STDIN_FILENO);
         int outFds = dup(STDOUT_FILENO);
 
         int result = callCommandWithPipe(0, commandNum);
 
-        /* 还原标准输入、输出重定向 */
+        /*Restore standard input and output redirection*/
         dup2(inFds, STDIN_FILENO);
         dup2(outFds, STDOUT_FILENO);
         exit(result);
@@ -431,8 +496,6 @@ int callCommand(int commandNum)
 int main()
 {
     char buf[MAXN];
-    int count;
-    // 用于记录缓冲区字符和字符个数
 
     int pid;
     int result;
@@ -443,23 +506,23 @@ int main()
         fflush(stdout);
 
         fgets(buf, BUFFSIZE, stdin);
-        //读入单行指令
+        // Read in single line instruction
 
         if (strcmp(buf, "\n") == 0)
         {
             printf("\n");
             continue;
         }
-        // 仅读到回车
+        // Only "Enter"
 
-        memset(arglist,0x00, sizeof(arglist));
+        memset(arglist, 0x00, sizeof(arglist));
 
         num = mystrtok(buf, " \b\r\n\t");
-        // 处理命令，分割为多个参数
+        // Processing command, divided into multiple parameters
 
         int inner_flag;
         inner_flag = inner(arglist);
-        //内置指令判断
+        // Built in instruction judgment
 
         if (inner_flag)
             continue;

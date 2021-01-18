@@ -17,6 +17,7 @@
 #include <utime.h>
 
 #include "mycp.c"
+#include "myps.c"
 
 #define MAXN 1024
 #define BUFFSIZE 1024
