@@ -40,15 +40,16 @@ chmod +x shell
 #### 目录列表
 
 ```
-.
 ├── LICENSE
 ├── main.c
 ├── mycp.c
+├── myls.c
+├── myps.c
 ├── README.md
 ├── shell
 └── shell.h
 
-0 directories, 6 files
+0 directories, 8 files
 ```
 
 
