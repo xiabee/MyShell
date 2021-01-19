@@ -1,7 +1,6 @@
 /**
  * ------------------shell.h-----------------------
- * Main Function of the shell	
- * Simulate the implementation of shell
+ *  Data structure and library needed by program
  *
  *	Author: xiabee
  *	Date  : 2020.1.18
