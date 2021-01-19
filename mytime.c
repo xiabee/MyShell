@@ -9,16 +9,16 @@
  */
 
 #include "shell.h"
-void mytime(int argc,char *argv[])
+void mytime(int argc, char *argv[])
 {
     struct timeval start_time;
     struct timeval end_time;
     // 精确到微秒
     double running_time = 0;
-    
+
     pid_t pid;
-    
-    if(argc<=1)
+
+    if (argc <= 1)
     {
         printf("Please input the process name!\n");
         return;
@@ -29,21 +29,21 @@ void mytime(int argc,char *argv[])
 
     if (pid < 0)
     {
-        perror("fork failed!\n");
-        exit(1);
+        printf("fork failed!\n");
+        return;
     }
     // 进程出错，fork失败
 
-    if(pid == 0) //返回子进程
+    if (pid == 0) //返回子进程
     {
         // printf("Create Child:\n");
         gettimeofday(&start_time, NULL);
-        
-        // execvp(argv[1], &argv[1]);
+
+        // execvl(argv[1], &argv[1]);
         execvp(argv[1], &argv[1]);
-        
-        printf("process name: %s\t pid:%d\n", argv[1], getpid());
-    } 
+        exit(errno);
+    }
+
     else
     {
         int status;
@@ -53,4 +53,6 @@ void mytime(int argc,char *argv[])
         running_time = (end_time.tv_sec - start_time.tv_sec) * 1000000 + (end_time.tv_usec - start_time.tv_usec);
         printf("running time: %lf ms\n", running_time / 1000);
     }
+
+    return;
 }

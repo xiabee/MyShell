@@ -1,5 +1,5 @@
 /**
- * ------------------MyShell-----------------------
+ * ------------------shell.h-----------------------
  * Main Function of the shell	
  * Simulate the implementation of shell
  *
@@ -28,15 +28,17 @@
 #include <utime.h>
 #include <sys/types.h>
 #include <grp.h>
+#include <unistd.h>
 #include <time.h>
-#include <stddef.h>
-#include<math.h>
+
 
 #include "mycp.c"
 #include "myps.c"
 #include "myls.c"
 #include "mycd.c"
 #include "mytime.c"
+#include "mytree.c"
+
 
 #define MAXN 1024
 #define BUFFSIZE 1024
@@ -57,7 +59,7 @@ const char *COMMAND_PIPE = "|";
 char *arglist[MAXN];
 // shell 指令的参数表
 
-int num = 0;
+int argc = 0;
 // shell指令的参数个数
 
 enum

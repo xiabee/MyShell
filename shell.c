@@ -38,7 +38,7 @@ int find(char *str, char *ch) // query the position where the character first ap
 
 void Init() // shell initialization
 {
-    num = 0;
+    argc = 0;
     memset(arglist, 0x00, sizeof(arglist));
     // command list initialization
 
@@ -106,7 +106,7 @@ int mystrtok(char *str, char *delim) // split the incoming parameters
     char *save = NULL;
     // Save pointer of prototype function strtok_r()
 
-    num = 0;
+    argc = 0;
     //Parameter counter
 
     char chBuffer[MAXN];
@@ -134,25 +134,25 @@ int mystrtok(char *str, char *delim) // split the incoming parameters
             {
                 if (find(token, operator[i]) == 0) // For example, ls >a.txt
                 {
-                    arglist[num++] = make(operator[i]);
+                    arglist[argc++] = make(operator[i]);
                     token1 = strtok_r(token, operator[i], &save1);
-                    arglist[num++] = make(token1);
+                    arglist[argc++] = make(token1);
                 }
 
                 else if (find(token, operator[i]) == strlen(token) - 1) // For example, ls> a.txt
                 {
                     token1 = strtok_r(token, operator[i], &save1);
-                    arglist[num++] = make(token1);
-                    arglist[num++] = make(operator[i]);
+                    arglist[argc++] = make(token1);
+                    arglist[argc++] = make(operator[i]);
                 }
 
                 else
                 {
                     token1 = strtok_r(token, operator[i], &save1);
-                    arglist[num++] = make(token1);
+                    arglist[argc++] = make(token1);
 
-                    arglist[num++] = make(operator[i]);
-                    arglist[num++] = make(save1);
+                    arglist[argc++] = make(operator[i]);
+                    arglist[argc++] = make(save1);
                 }
 
                 token1 = NULL;
@@ -164,11 +164,11 @@ int mystrtok(char *str, char *delim) // split the incoming parameters
             //An operator appears within a character
         }
 
-        arglist[num++] = make(token);
+        arglist[argc++] = make(token);
         token = NULL;
     }
 
-    return num;
+    return argc;
 }
 
 int inner(char *arglist[]) // execute built-in instructions
@@ -191,7 +191,8 @@ int inner(char *arglist[]) // execute built-in instructions
         printf("mycp\t\t: Copy entire directory.\n");
         printf("myps\t\t: Display process information.\n");
         printf("myls\t\t: Display file information.\n");
-        printf("mytime\t\t:Measure the running time of the process.\n");
+        printf("mytime\t\t: Measure the running time of the process or control the specified running time of the process\n");
+        printf("mytree\t\t: Show the structure of the directory\n");
         printf("exit\t\t: Exit the shell.\n");
 
         printf("\n");
@@ -211,7 +212,7 @@ int inner(char *arglist[]) // execute built-in instructions
 
     else if (strcmp(arglist[0], "cd\0") == 0) //cd
     {
-        mycd(num, arglist);
+        mycd(argc, arglist);
         return 1;
     }
 
@@ -224,7 +225,7 @@ int inner(char *arglist[]) // execute built-in instructions
         struct utimbuf timeby;
         // time file structure
 
-        if (Check(num, arglist, statbuf))
+        if (Check(argc, arglist, statbuf))
             return -1;
 
         Mycp(arglist[1], arglist[2]);
@@ -251,13 +252,19 @@ int inner(char *arglist[]) // execute built-in instructions
 
     else if (strcmp(arglist[0], "myls\0") == 0)
     {
-        myls(num, arglist);
+        myls(argc, arglist);
         return 1;
     }
 
     else if (strcmp(arglist[0], "mytime\0")==0)
     {
-        mytime(num, arglist);
+        mytime(argc, arglist);
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "mytree\0") == 0)
+    {
+        mytree(argc, arglist);
         return 1;
     }
 
@@ -359,8 +366,8 @@ int callCommandWithRedi(int left, int right) // the instruction interval [left, 
 
         if (err)
         {
-            printf("\e[31;1mCommand Error: %s\n\e[0m", strerror(err));
-            printf("You may need 'help'\n\n");
+            printf("Command Error!\n");
+            printf("You may need \e[31;1m'help'\e[0m\n\n");
         }
         /* The return code is not 0, 
          * which means that the subprocess has made an error in execution, 
@@ -524,7 +531,7 @@ int main()
 
         memset(arglist, 0x00, sizeof(arglist));
 
-        num = mystrtok(buf, " \b\r\n\t");
+        argc = mystrtok(buf, " \b\r\n\t");
         // Processing command, divided into multiple parameters
 
         int inner_flag;
@@ -534,7 +541,7 @@ int main()
         if (inner_flag)
             continue;
 
-        result = callCommand(num);
+        result = callCommand(argc);
 
         switch (result)
         {

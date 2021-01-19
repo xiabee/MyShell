@@ -28,6 +28,7 @@ chmod +x shell
 * 显示当前目录文件：`myls`
 * 切换工作目录：`cd`，`cd`实现无参数时进入家目录
 * 测试进程运行时间：`mytime`
+* 显示目录结构：`mytree`
 
 
 
@@ -35,7 +36,7 @@ chmod +x shell
 
 * 递归分割操作符
 * `shell`历史记录
-* 显示文件夹结构`mytree`
+* 删除操作
 
 
 
@@ -62,33 +63,58 @@ chmod +x shell
 #### 部分演示
 
 ```bash
-[xiabee @ DESKTOP-DOIHA8N MyShell]
-$ pwd
-/mnt/d/GitHub/MyShell
-
-[xiabee @ DESKTOP-DOIHA8N MyShell]
-$ myls -l
--rwxrwxrwx    1 xiabee   xiabee      16725 Jan 18 15:29 LICENSE
--rwxrwxrwx    1 xiabee   xiabee      14046 Jan 19 11:08 main.c
--rwxrwxrwx    1 xiabee   xiabee        915 Jan 19 11:07 mycd.c
--rwxrwxrwx    1 xiabee   xiabee       5261 Jan 19 08:32 mycp.c
--rwxrwxrwx    1 xiabee   xiabee       5058 Jan 19 08:46 myls.c
--rwxrwxrwx    1 xiabee   xiabee       5706 Jan 18 22:43 myps.c
--rwxrwxrwx    1 xiabee   xiabee       1323 Jan 19 11:09 README.md
--rwxrwxrwx    1 xiabee   xiabee      33200 Jan 19 11:08 shell
--rwxrwxrwx    1 xiabee   xiabee       1588 Jan 19 10:46 shell.h
-[xiabee @ DESKTOP-DOIHA8N MyShell]
+[xiabee @ DESKTOP-DOIHA8N src]
+$ ls
+bin  LICENSE  main.c  mycd.c  mycp.c  myls.c  myps.c  mytime.c  mytree.c  README.md  shell  shell.h
+[xiabee @ DESKTOP-DOIHA8N src]
 $ myps
 USER            PID     PPID    STATE   PNAME
 root            1       0       S       (init)
-root            5149    1       S       (init)
-root            5150    5149    S       (init)
-xiabee          5151    5150    S       (zsh)
-xiabee          5438    5151    R       (shell)
-[xiabee @ DESKTOP-DOIHA8N MyShell]
-$
+root            7       1       S       (init)
+root            8       7       S       (init)
+xiabee          9       8       S       (zsh)
+root            178     1       S       (init)
+root            179     178     S       (init)
+xiabee          180     179     S       (sh)
+xiabee          181     180     S       (sh)
+xiabee          186     181     S       (sh)
+xiabee          188     186     S       (node)
+xiabee          229     188     S       (node)
+xiabee          242     188     S       (node)
+xiabee          264     242     S       (cpptools)
+xiabee          2890    264     S       (cpptools-srv)
+xiabee          9617    9       R       (shell)
+[xiabee @ DESKTOP-DOIHA8N src]
+$ mytree .
+.
+├── .
+├── ..
+├── bin
+│   ├── .
+│   ├── ..
+│   ├── sss file
+│   ├── sss.c file
+│   ├── strtok file
+│   ├── strtok.c file
+│   ├── test file
+│   └── test.c file
+├── LICENSE file
+├── main.c file
+├── mycd.c file
+├── mycp.c file
+├── myls.c file
+├── myps.c file
+├── mytime.c file
+├── mytree.c file
+├── README.md file
+├── shell file
+└── shell.h file
+[xiabee @ DESKTOP-DOIHA8N src]
+$ test
+Command Error!
+You may need 'help'
 
-[xiabee @ DESKTOP-DOIHA8N MyShell]
+[xiabee @ DESKTOP-DOIHA8N src]
 $ help
 XSLF bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)
 These shell commands are defined internally.  Type 'help' to see this list.
@@ -98,11 +124,9 @@ cd              : Change working directory.
 mycp            : Copy entire directory.
 myps            : Display process information.
 myls            : Display file information.
-mytime          :Measure the running time of the process.
+mytime          :Measure the running time of the process or control the specified running time of the process
+mytree          :Show the structure of the directory
 exit            : Exit the shell.
-
-[xiabee @ DESKTOP-DOIHA8N MyShell]
-$
 ```
 
 
