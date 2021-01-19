@@ -210,14 +210,7 @@ int inner(char *arglist[]) // execute built-in instructions
 
     else if (strcmp(arglist[0], "cd\0") == 0) //cd
     {
-        char buf[LEN];
-        int sta = chdir(arglist[1]);
-        if (sta < 0) // cannot find the file
-        {
-            printf("\e[31;1mcd: No such file or directory: %s\n\n\e[0m", arglist[1]);
-            return 1;
-        }
-        printf("\n");
+        mycd(num, arglist);
         return 1;
     }
 

@@ -35,6 +35,7 @@
 #include "mycp.c"
 #include "myps.c"
 #include "myls.c"
+#include "mycd.c"
 
 #define MAXN 1024
 #define BUFFSIZE 1024
