@@ -191,8 +191,9 @@ int inner(char *arglist[]) // execute built-in instructions
         printf("mycp\t\t: Copy entire directory.\n");
         printf("myps\t\t: Display process information.\n");
         printf("myls\t\t: Display file information.\n");
-        printf("mytime\t\t: Measure the running time of the process or control the specified running time of the process\n");
-        printf("mytree\t\t: Show the structure of the directory\n");
+        printf("mytime\t\t: Measure the running time of the process or control the specified running time of the process.\n");
+        printf("mytree\t\t: Show the structure of the directory.\n");
+        printf("history\t\t: Show input history.\n");
         printf("exit\t\t: Exit the shell.\n");
 
         printf("\n");
@@ -256,7 +257,7 @@ int inner(char *arglist[]) // execute built-in instructions
         return 1;
     }
 
-    else if (strcmp(arglist[0], "mytime\0")==0)
+    else if (strcmp(arglist[0], "mytime\0") == 0)
     {
         mytime(argc, arglist);
         return 1;
@@ -265,6 +266,16 @@ int inner(char *arglist[]) // execute built-in instructions
     else if (strcmp(arglist[0], "mytree\0") == 0)
     {
         mytree(argc, arglist);
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "history\0") == 0)
+    {
+        printf("-------------------------------------\n");
+        printf("**  Print Input History until now: **\n");
+        for (int i = 0; i < cmd_cnt; i++)
+            printf("%s", history[i]);
+        printf("-------------------------------------\n");
         return 1;
     }
 
@@ -514,8 +525,13 @@ int main()
     int pid;
     int result;
 
+    cmd_cnt = 0;
+    memset(history, 0x00, sizeof(history));
+    // Initialize history command
+
     while (1)
     {
+
         Init();
         fflush(stdout);
 
@@ -528,6 +544,18 @@ int main()
             continue;
         }
         // Only "Enter"
+
+        strcpy(history[cmd_cnt], buf);
+        cmd_cnt++;
+        if (cmd_cnt >= MAXN)
+        {
+            cmd_cnt = 0;
+            memset(history, 0x00, sizeof(history));
+            printf("--------------------------------------------\n");
+            printf(" Waring: Lack of space! Reset Input History!\n");
+            printf("--------------------------------------------\n");
+        }
+        // overfloor, reset history[][]
 
         memset(arglist, 0x00, sizeof(arglist));
 

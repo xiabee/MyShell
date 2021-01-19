@@ -30,7 +30,6 @@
 #include <unistd.h>
 #include <time.h>
 
-
 #include "mycp.c"
 #include "myps.c"
 #include "myls.c"
@@ -38,11 +37,9 @@
 #include "mytime.c"
 #include "mytree.c"
 
-
 #define MAXN 1024
 #define BUFFSIZE 1024
 #define LEN 128
-
 
 const char *COMMAND_EXIT = "exit";
 const char *COMMAND_HELP = "help";
@@ -57,6 +54,11 @@ const char *COMMAND_PIPE = "|";
 
 char *arglist[MAXN];
 // shell 指令的参数表
+
+char history[MAXN][MAXN];
+// 用于记录历史输入
+int cmd_cnt = 0;
+// 用于记录历史输入的个数
 
 int argc = 0;
 // shell指令的参数个数
