@@ -51,3 +51,23 @@ chmod +x shell
 0 directories, 6 files
 ```
 
+
+
+#### 部分演示
+
+```
+[xiabee @ DESKTOP-DOIHA8N MyShell]
+$ help
+XSLF bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)
+These shell commands are defined internally.  Type 'help' to see this list.
+
+pwd             : Show the current working directory.
+cd              : Change working directory.
+mycp            : Copy entire directory.
+myps            : Display process information.
+myls            : Display file information.
+exit            : Exit the shell.
+```
+
+
+
