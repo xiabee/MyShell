@@ -11,6 +11,8 @@
 #### 编译运行
 
 ```
+gitclone https://github.com/xiabee/MyShell
+cd ./MyShell
 gcc -o shell.c shell
 chmod +x shell
 ./shell
