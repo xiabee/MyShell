@@ -27,6 +27,7 @@ chmod +x shell
 * 打印进程信息：`myps`
 * 显示当前目录文件：`myls`
 * 切换工作目录：`cd`，`cd`实现无参数时进入家目录
+* 测试进程运行时间：`mytime`
 
 
 
@@ -41,17 +42,19 @@ chmod +x shell
 #### 目录列表
 
 ```
+.
 ├── LICENSE
 ├── main.c
 ├── mycd.c
 ├── mycp.c
 ├── myls.c
 ├── myps.c
+├── mytime.c
 ├── README.md
 ├── shell
 └── shell.h
 
-0 directories, 9 files
+0 directories, 10 files
 ```
 
 
@@ -95,6 +98,7 @@ cd              : Change working directory.
 mycp            : Copy entire directory.
 myps            : Display process information.
 myls            : Display file information.
+mytime          :Measure the running time of the process.
 exit            : Exit the shell.
 
 [xiabee @ DESKTOP-DOIHA8N MyShell]

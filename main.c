@@ -191,6 +191,7 @@ int inner(char *arglist[]) // execute built-in instructions
         printf("mycp\t\t: Copy entire directory.\n");
         printf("myps\t\t: Display process information.\n");
         printf("myls\t\t: Display file information.\n");
+        printf("mytime\t\t:Measure the running time of the process.\n");
         printf("exit\t\t: Exit the shell.\n");
 
         printf("\n");
@@ -251,6 +252,12 @@ int inner(char *arglist[]) // execute built-in instructions
     else if (strcmp(arglist[0], "myls\0") == 0)
     {
         myls(num, arglist);
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "mytime\0")==0)
+    {
+        mytime(num, arglist);
         return 1;
     }
 
