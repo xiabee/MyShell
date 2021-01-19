@@ -25,6 +25,7 @@ chmod +x shell
 * 操作符与参数相连时，自动分割操作符与参数
 * 文件夹复制命令：`mycp <target> <dest>`
 * 打印进程信息：`myps`
+* 显示当前目录文件：`myls`
 
 
 
@@ -32,6 +33,7 @@ chmod +x shell
 
 * 递归分割操作符
 * `shell`历史记录
+* 显示文件夹结构`mytree`
 
 
 

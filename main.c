@@ -186,10 +186,11 @@ int inner(char *arglist[]) // execute built-in instructions
         // XSLF is the short names of the four authors: XYJ, SXC, LJH, FKT
 
         printf("These shell commands are defined internally.  Type 'help' to see this list.\n\n");
-        printf("pwd\t\t: Show the current working directory\n");
+        printf("pwd\t\t: Show the current working directory.\n");
         printf("cd\t\t: Change working directory.\n");
         printf("mycp\t\t: Copy entire directory.\n");
-        printf("myps\t\t: Display process information\n");
+        printf("myps\t\t: Display process information.\n");
+        printf("myls\t\t: Display file information.\n");
         printf("exit\t\t: Exit the shell.\n");
 
         printf("\n");
@@ -251,6 +252,12 @@ int inner(char *arglist[]) // execute built-in instructions
     else if (strcmp(arglist[0], "myps\0") == 0)
     {
         myps();
+        return 1;
+    }
+
+    else if (strcmp(arglist[0], "myls\0") == 0)
+    {
+        myls(num, arglist);
         return 1;
     }
 
