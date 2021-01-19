@@ -13,7 +13,7 @@
 ```
 gitclone https://github.com/xiabee/MyShell
 cd ./MyShell
-gcc -o shell.c shell
+gcc -o shell shell.c
 chmod +x shell
 ./shell
 ```
