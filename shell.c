@@ -182,7 +182,7 @@ int inner(char *arglist[]) // execute built-in instructions
 
     if (strcmp(arglist[0], "help\0") == 0) // help
     {
-        printf("XSLF bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)\n");
+        printf("XSLF bash, version 1.0-release (x86_64-pc-linux-gnu)\n");
         // XSLF is the short names of the four authors: XYJ, SXC, LJH, FKT
 
         printf("These shell commands are defined internally.  Type 'help' to see this list.\n\n");

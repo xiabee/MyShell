@@ -154,6 +154,8 @@ int Check(int argc, char *argv[], struct stat statbuf) // 检测输入与目标�
     if (S_IFREG & statbuf.st_mode)
     {
         CopyFile(argv[1], argv[2]);
+        // 普通文件
+
         printf("Copy Finished!\n");
         return -1;
     }
@@ -161,7 +163,7 @@ int Check(int argc, char *argv[], struct stat statbuf) // 检测输入与目标�
 
     if ((dir = opendir(argv[1])) == NULL)
     {
-        printf("Source Dir does not exist.\n"); //源文件打开出错
+        printf("Source Dir or File does not exist.\n"); //源文件打开出错
         return 1;
     }
 
