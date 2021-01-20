@@ -30,7 +30,7 @@ int myline4file(char *path)
     }
 
     char ch;
-    int row = 0, cnt = 0;
+    int row = 1, cnt = 0;
 
     // start counting lines
     while (feof(fp) == 0)
@@ -46,7 +46,10 @@ int myline4file(char *path)
     }
 
     fclose(fp);
-    return row + 1;
+
+    printf("%s\t%d\n", path, row);
+
+    return row;
 }
 
 // get number of lines of a dir or file
