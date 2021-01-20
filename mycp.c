@@ -1,6 +1,6 @@
 /**
  * ------------------mycp-----------------------
- *	Copy source directory to destination.
+ *	Copy source directory or file to destination.
  *
  *	Author: xiabee
  *	Date  : 2020.1.7
@@ -144,7 +144,7 @@ int Check(int argc, char *argv[], struct stat statbuf) // 检测输入与目标�
     if (argc != 3) //参数出错
     {
         printf("Invalid arguments.\n");
-        printf("Usage: mycp <path> <path> \n");
+        printf("Usage: mycp <target> <dest> \n");
 
         return -1;
     }
@@ -153,15 +153,16 @@ int Check(int argc, char *argv[], struct stat statbuf) // 检测输入与目标�
     result = lstat(argv[1], &statbuf);
     if (S_IFREG & statbuf.st_mode)
     {
-        printf("Please Input a Directory Name!\n");
+        CopyFile(argv[1], argv[2]);
+        printf("Copy Finished!\n");
         return -1;
     }
-    // 检查是否为文件夹
+    // 检查是否为文件文件，若为文件则直接复制文件
 
     if ((dir = opendir(argv[1])) == NULL)
     {
         printf("Source Dir does not exist.\n"); //源文件打开出错
-        return -1;
+        return 1;
     }
 
     if ((dir = opendir(argv[2])) == NULL)

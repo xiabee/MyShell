@@ -188,7 +188,7 @@ int inner(char *arglist[]) // execute built-in instructions
         printf("These shell commands are defined internally.  Type 'help' to see this list.\n\n");
         printf("pwd\t\t: Show the current working directory.\n");
         printf("cd\t\t: Change working directory.\n");
-        printf("mycp\t\t: Copy entire directory.\n");
+        printf("mycp\t\t: Copy source directory or file to destination.\n");
         printf("myps\t\t: Display process information.\n");
         printf("myls\t\t: Display file information.\n");
         printf("mytime\t\t: Measure the running time of the process or control the specified running time of the process.\n");
