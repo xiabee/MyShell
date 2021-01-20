@@ -7,12 +7,7 @@
  * ---------------------------------------------
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <dirent.h>	  //opendir() readdir
-#include <sys/stat.h> //lstat() mkdir() futimens() utimensat()
-#include <unistd.h>	  //read() write() readlink() symlink()
-#include <fcntl.h>	  // open()
+#include "shell.h"
 
 // #include "myrm.c"
 
@@ -27,7 +22,7 @@ int mymv_main(char *src, char *tar)
 	if (lstat(src, &st))
 
 	{
-		perror("lstat error");
+		printf("lstat error\n");
 		return 2;
 	}
 
@@ -35,7 +30,7 @@ int mymv_main(char *src, char *tar)
 	if (mkdir(tar, st.st_mode))
 
 	{
-		perror("mkdir error");
+		printf("mkdir error\n");
 		return 2;
 	}
 
@@ -78,7 +73,7 @@ int mymv_main(char *src, char *tar)
 			if (mymv_main(src_sub, tar_sub) != 1)
 
 			{
-				perror("mymv_main error");
+				printf("mymv_main error\n");
 				return 2;
 			}
 		}
@@ -93,7 +88,7 @@ int mymv_main(char *src, char *tar)
 			if (link_len == 0)
 
 			{
-				perror("readlink error");
+				printf("readlink error\n");
 				return 2;
 			}
 			link_path[link_len] = '\0';
@@ -102,7 +97,7 @@ int mymv_main(char *src, char *tar)
 			if (!symlink(link_path, tar_sub))
 
 			{
-				perror("symlink error");
+				printf("symlink error\n");
 				return 2;
 			}
 
@@ -112,7 +107,7 @@ int mymv_main(char *src, char *tar)
 			if (lstat(src, &st))
 
 			{
-				perror("lstat error");
+				printf("lstat error\n");
 				return 2;
 			}
 			struct timespec ts[2];
@@ -123,7 +118,7 @@ int mymv_main(char *src, char *tar)
 			if (!utimensat(AT_FDCWD, tar_sub, ts, AT_SYMLINK_NOFOLLOW))
 
 			{
-				perror("utimensat error");
+				printf("utimensat error\n");
 			}
 		}
 		// oridinary file
@@ -136,7 +131,7 @@ int mymv_main(char *src, char *tar)
 			if (lstat(src, &st))
 
 			{
-				perror("lstat error");
+				printf("lstat error\n");
 				return 2;
 			}
 
@@ -145,8 +140,8 @@ int mymv_main(char *src, char *tar)
 			if (!fd_tar)
 
 			{
-				perror("open error");
-				exit(0);
+				printf("open error\n");
+				return 0;
 			}
 			int len;
 			char buffer[BUFSIZ];
@@ -163,7 +158,7 @@ int mymv_main(char *src, char *tar)
 			if (futimens(fd_tar, ts))
 
 			{
-				perror("futimens");
+				printf("futimens");
 				return 2;
 			}
 		}
@@ -181,7 +176,7 @@ int mymv_main(char *src, char *tar)
 
 	if (getcwd(pwd, NAME_MAX) == NULL)
 	{
-		perror("Error in geting pwd");
+		printf("Error in geting pwd\n");
 		return 2;
 	}
 	int argc = 2;

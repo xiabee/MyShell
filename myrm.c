@@ -7,13 +7,7 @@
  * ---------------------------------------------
  */
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <string.h>
+#include "shell.h"
 
 #define RM_SUCCESS 1
 #define RM_FAILURE 2
@@ -51,7 +45,7 @@ int myrm_main(char *target, int mode)
     memset(pwd, 0, sizeof(pwd));
     if (getcwd(pwd, NAME_MAX) == NULL)
     {
-        perror("Error in geting pwd");
+        printf("Error in geting pwd\n");
         return RM_FAILURE;
     }
 

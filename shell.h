@@ -36,6 +36,8 @@
 #include "mycd.c"
 #include "mytime.c"
 #include "mytree.c"
+#include "myrm.c"
+#include "mymv.c"
 
 #define MAXN 1024
 #define BUFFSIZE 1024

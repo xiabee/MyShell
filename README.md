@@ -32,13 +32,10 @@ chmod +x shell
 * 显示进程运行时间：`mytime`
 * 显示目录结构：`mytree`
 * 显示输入历史：`history`
+* 自定义移动：`mymv`
+* 自定义删除（支持直接删除文件夹）：`myrm`
 
 
-
-#### 待实现
-
-* 递归分割操作符
-* 删除操作
 
 
 
@@ -50,7 +47,9 @@ chmod +x shell
 ├── mycd.c
 ├── mycp.c
 ├── myls.c
+├── mymv.c
 ├── myps.c
+├── myrm.c
 ├── mytime.c
 ├── mytree.c
 ├── README.md
@@ -58,7 +57,7 @@ chmod +x shell
 ├── shell.c
 └── shell.h
 
-0 directories, 11 files
+0 directories, 13 files
 ```
 
 
