@@ -293,6 +293,12 @@ int inner(char *arglist[]) // execute built-in instructions
         return 1;
     }
 
+    else if (strcmp(arglist[0], "myline\0") == 0)
+    {
+        myline(argc, arglist);
+        return 1;
+    }
+
     else
         return 0;
 }
