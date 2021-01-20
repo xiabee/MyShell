@@ -26,6 +26,56 @@ int mymv_main(char *src, char *tar)
 		return 2;
 	}
 
+	// src is a file
+	if (S_ISREG(st.st_mode))
+
+	{
+		int fd_src = open(src, O_RDONLY);
+
+		// create new file
+		int fd_tar = open(tar, O_RDWR | O_CREAT, st.st_mode);
+		if (!fd_tar)
+
+		{
+			printf("open error\n");
+			return 0;
+		}
+
+		int len;
+		char buffer[BUFSIZ];
+		while (len = read(fd_src, buffer, BUFSIZ))
+		{
+			write(fd_tar, buffer, len);
+		}
+
+		// change time
+		struct timespec ts[2];
+		ts[0] = st.st_atim;
+		ts[1] = st.st_mtim;
+		if (futimens(fd_tar, ts))
+		{
+			printf("futimens");
+			return 2;
+		}
+
+		char pwd[NAME_MAX];
+		memset(pwd, 0, sizeof(pwd));
+
+		if (getcwd(pwd, NAME_MAX) == NULL)
+		{
+			printf("Error in geting pwd\n");
+			return 2;
+		}
+		int argc = 2;
+		char *argv[3];
+		argv[0] = pwd;
+		argv[1] = src;
+		argv[2] = NULL;
+		int flag = 0;
+		flag = mvrm(2, argv);
+		return flag;
+	}
+
 	// create new directory
 	if (mkdir(tar, st.st_mode))
 
