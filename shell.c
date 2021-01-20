@@ -194,8 +194,9 @@ int inner(char *arglist[]) // execute built-in instructions
         printf("mytime\t\t: Measure the running time of the process or control the specified running time of the process.\n");
         printf("mytree\t\t: Show the structure of the directory.\n");
         printf("myrm\t\t: Recursively and forcedly remove files and directories.\n");
-        printf("mymv\t\t: Move or rename directory or file\n");
-        printf("history\t\t: Show input history.\n");
+        printf("mymv\t\t: Move or rename directory or file.\n");
+        printf("myline\t\t: Count the total lines of a directory or file.\n");
+        printf("myhis\t\t: Show input history.\n");
         printf("exit\t\t: Exit the shell.\n");
 
         printf("\n");
@@ -271,7 +272,7 @@ int inner(char *arglist[]) // execute built-in instructions
         return 1;
     }
 
-    else if (strcmp(arglist[0], "history\0") == 0)
+    else if (strcmp(arglist[0], "myhis\0") == 0)
     {
         printf("-------------------------------------\n");
         printf("**  Print Input History until now: **\n");

@@ -7,13 +7,7 @@
  * ---------------------------------------------
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <dirent.h>
+# include "shell.h"
 
 // get number of lines of a file
 int myline4file(char *path)
@@ -47,7 +41,7 @@ int myline4file(char *path)
 
     fclose(fp);
 
-    printf("%s\t%d\n", path, row);
+    printf("%s      \t%d\n", path, row);
 
     return row;
 }
@@ -184,7 +178,7 @@ int myline(int argc, char *argv[])
 
     if (total_lines != -1)
     {
-        printf("total lines: %d\n", total_lines);
+        printf("\ntotal lines: \t%d\n\n", total_lines);
     }
 
     return total_lines;

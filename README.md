@@ -25,6 +25,7 @@ chmod +x shell
 * 外部指令调用
 * 管道与重定向
 * 操作符与参数相连时，自动分割操作符与参数
+* 命令提示：`help`
 * 文件夹复制命令：`mycp <target> <dest>`
 * 显示进程信息：`myps`
 * 显示当前目录文件：`myls`
@@ -34,31 +35,11 @@ chmod +x shell
 * 显示输入历史：`history`
 * 自定义移动：`mymv`
 * 自定义删除（支持直接删除文件夹）：`myrm`
+* 显示文件/ 文件夹内全部文件的函数：`myline`
 
 
 
 
-
-#### 目录列表
-
-```
-.
-├── LICENSE
-├── mycd.c
-├── mycp.c
-├── myls.c
-├── mymv.c
-├── myps.c
-├── myrm.c
-├── mytime.c
-├── mytree.c
-├── README.md
-├── shell
-├── shell.c
-└── shell.h
-
-0 directories, 13 files
-```
 
 
 
