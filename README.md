@@ -10,12 +10,12 @@
 
 #### 编译运行
 
-```
+```bash
 gitclone https://github.com/xiabee/MyShell
 cd ./MyShell
-gcc -o shell shell.c
-chmod +x shell
-./shell
+gcc -o MyShell shell.c
+chmod +x MyShell
+./MyShell
 ```
 
 
