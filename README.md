@@ -1,26 +1,25 @@
 # MyShell
 
-
-
-#### 项目简介
+## 项目简介
 
 * 功能：手动实现`Linux`的`shell`解释器
 
+* 演示视频：[https://www.bilibili.com/video/BV1Pq4y1g7w4/](https://www.bilibili.com/video/BV1Pq4y1g7w4/)
 
 
-#### 编译运行
+
+## 编译运行
 
 ```bash
 gitclone https://github.com/xiabee/MyShell
 cd ./MyShell
 gcc -o MyShell shell.c
-chmod +x MyShell
 ./MyShell
 ```
 
 
 
-#### 当前实现
+## 功能实现
 
 * 外部指令调用
 * 管道与重定向
@@ -40,11 +39,7 @@ chmod +x MyShell
 
 
 
-
-
-
-
-#### 部分演示
+## 部分演示
 
 ```bash
 # xiabee @ DESKTOP-DOIHA8N in /mnt/d/GitHub/MyShell on git:main x [17:35:52]
@@ -66,15 +61,7 @@ root            766     765     S       (init)
 xiabee          767     766     S       (sh)
 xiabee          768     767     S       (sh)
 xiabee          773     768     S       (sh)
-xiabee          775     773     S       (node)
-xiabee          822     775     S       (node)
-xiabee          829     775     S       (node)
-xiabee          850     822     S       (cpptools)
-xiabee          934     850     S       (cpptools-srv)
-root            4446    1       S       (init)
-root            4447    4446    S       (init)
-xiabee          4448    4447    S       (zsh)
-xiabee          20015   4448    R       (shell)
+
 [xiabee @ DESKTOP-DOIHA8N MyShell]
 $ cd
 
@@ -92,35 +79,11 @@ $ mytree . 2
 ├── ..
 ├── .git
 │   ├── .
-│   ├── ..
-│   ├── branches dir
-│   ├── COMMIT_EDITMSG file
-│   ├── config file
-│   ├── description file
 │   ├── FETCH_HEAD file
 │   ├── HEAD file
-│   ├── hooks dir
-│   ├── index file
-│   ├── info dir
-│   ├── logs dir
-│   ├── objects dir
-│   ├── ORIG_HEAD file
-│   ├── packed-refs file
-│   └── refs dir
-├── LICENSE file
-├── mycd.c file
-├── mycp.c file
-├── myline.c file
-├── myls.c file
-├── mymv.c file
-├── myps.c file
-├── myrm.c file
-├── mytime.c file
-├── mytree.c file
-├── README.md file
-├── shell file
-├── shell.c file
+| ......
 └── shell.h file
+
 [xiabee @ DESKTOP-DOIHA8N MyShell]
 $ myline shell.c
 shell.c         626
@@ -151,3 +114,7 @@ $
 
 
 
+## 暂未实现
+
+* `makefile`编写（太鸽了忘记了）
+* 特殊符号处理，例如方向键（太鸽了忘记了）
