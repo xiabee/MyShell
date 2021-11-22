@@ -3,8 +3,8 @@
 ## 项目简介
 
 * 功能：手动实现`Linux`的`shell`解释器
-
 * 演示视频：[https://www.bilibili.com/video/BV1Pq4y1g7w4/](https://www.bilibili.com/video/BV1Pq4y1g7w4/)
+* 演示环境：`Kali GNU/Linux Rolling on Windows 10 x86_64`
 
 
 
